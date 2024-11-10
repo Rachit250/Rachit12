@@ -1,0 +1,33 @@
+Implement the insertion inside iterative and recursive Binary search tree and compare their performance.
+
+
+#include <stdio.h>
+int binarySearch(int arr[],int beg, int end, int num) {
+    if (beg <= end) 
+    {
+        int mid = (beg + end)/2;
+        if (arr[mid]==num)
+            return mid;
+        if (arr[mid]<num)
+            return binarySearch(arr,mid+1,end,num);
+        return binarySearch(arr, beg,mid-1,num); }
+    return -1;
+}
+int main() 
+{
+    int size, num, result;
+    printf("Enter the size of the array: ");
+    scanf("%d",&size);
+    int arr[size];
+    printf("Enter %d elements in sorted order\n",size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+    printf("Enter the number to search: ");
+    scanf("%d", &num);
+    result = binarySearch(arr,0, size-1, num);
+    if (result !=-1)
+        printf("Element found at index %d\n",result);
+    else
+        printf("Element not found");
+    return 0;}
