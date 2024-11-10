@@ -1,0 +1,52 @@
+ Implement the activity selection problem to get a clear understanding of greedy approach.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to represent an activity
+typedef struct {
+    int start;
+    int end;
+} Activity;
+
+// Comparison function for sorting activities by their end times
+int compare(const void* a, const void* b) {
+    Activity* activityA = (Activity*)a;
+    Activity* activityB = (Activity*)b;
+    return activityA->end - activityB->end;
+}
+
+// Function to perform the activity selection
+void activitySelection(Activity activities[], int n) {
+    // Sort activities by their end times
+    qsort(activities, n, sizeof(Activity), compare);
+
+    printf("Selected activities:\n");
+
+    // The first activity is always selected
+    int lastSelectedIndex = 0;
+    printf("Activity %d (Start: %d, End: %d)\n", 1, activities[0].start, activities[0].end);
+
+    // Consider the rest of the activities
+    for (int i = 1; i < n; i++) {
+        // If the activity's start time is greater than or equal to the end time
+        // of the last selected activity, select it
+        if (activities[i].start >= activities[lastSelectedIndex].end) {
+            printf("Activity %d (Start: %d, End: %d)\n", i + 1, activities[i].start, activities[i].end);
+            lastSelectedIndex = i;
+        }
+    }
+}
+
+int main() {
+    // Define an array of activities with start and end times
+    Activity activities[] = {
+        {1, 2}, {3, 4}, {0, 6}, {5, 7}, {8, 9}, {5, 9}
+    };
+    int n = sizeof(activities) / sizeof(activities[0]);
+
+    // Perform the activity selection
+    activitySelection(activities, n);
+
+    return 0;
+}
